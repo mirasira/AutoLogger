@@ -11,7 +11,7 @@
 | Common problems  | Common solutions |
 | ------------- | ------------- |
 | I don't have python  | downald one from microsoft store (version 3.11 or 3.12)  |
-| I dont have X library  | try pip install X  |
+| I dont have X library  | try ```pip install X```  |
 | I am getting error XYZ | Try internet or ChatGPT |
 
 
