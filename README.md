@@ -1,4 +1,4 @@
-= How to use AutoLogger
+# How to use AutoLogger
 
 1. Downald files AutoLogger.py and InputData_expample.json into same directory in your computer.
 2. Rename InputData_expample.json to InputData.json
