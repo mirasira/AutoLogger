@@ -1,3 +1,4 @@
-*.json
+InputData.json
 *.png
 *.txt
+.gitignore
