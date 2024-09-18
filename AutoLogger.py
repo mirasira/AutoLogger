@@ -6,10 +6,10 @@ import json
 
 def main():
     print("AutoLogger started")
-    Username, Password, GCList, LogText, DoScreenshots, Date = readConfig()
+    Username, Password, GCList, LogText, DoScreenshots, Date, Mode, ShowScreen = readConfig()
 
     with sync_playwright() as p:
-        browser = p.chromium.launch(headless=False)
+        browser = p.chromium.launch(headless=not(ShowScreen))
         context = browser.new_context()
         page = context.new_page()
 
@@ -33,7 +33,44 @@ def main():
         Language = CheckLanguage(page)
         print(Language)
         # Log caches
-        LogCaches(page, GCCodes, LogText, DoScreenshots, Date, Language)
+        if Mode == "LOG":
+            LogCaches(page, GCCodes, LogText, DoScreenshots, Date, Language)
+        elif Mode == "IGNORE":
+            PutToIgnoreList(page, GCCodes, LogText, DoScreenshots, Date, Language)
+
+
+def PutToIgnoreList(page, GCCodes, LogText, DoScreenshots, Date, Language):
+    for GCCode in GCCodes:
+        try:
+            page.goto("https://www.geocaching.com/geocache/" + GCCode, timeout=7000)
+        except:
+            print("Cache " + GCCode + " not found")
+            GCCodes.append(GCCode)
+            continue
+        page.wait_for_load_state()
+        CheckForGDPR(page)
+        page.wait_for_load_state()
+
+        Element = "#ctl00_ContentBody_GeoNav_uxIgnoreBtn > a"
+        button = page.locator(Element)
+        button.click()
+        page.wait_for_load_state()
+        if DoScreenshots:
+            page.screenshot(path='screenshotIgnore.png')
+
+        try:
+            if Language == "EN":
+                button = page.wait_for_selector("text='Yes. Ignore it.'", timeout=500)
+            else:
+                button = page.wait_for_selector("text='Ano. Ignoruj to.'", timeout=500)
+            print(f"Ignoring {GCCode}")
+            button.click()
+        except:
+            print("Already ignored " + GCCode)
+            continue
+        page.wait_for_load_state()
+
+        # time.sleep(1000)
 
 def CheckLanguage(page):
     Element = "#__next > div > div.page-container.flex.flex-col.flex-grow.items-center > div > section > div.list-details-1e8caxa > span > a"
@@ -194,7 +231,9 @@ def readConfig():
         LogText = data['LogText']
         DoScreenshots = data['DoScreenshots']
         Date = data['Date']
-    return Username, Password, GCList, LogText, DoScreenshots, Date
+        Mode = data['Mode']
+        ShowScreen = data['ShowScreen']
+    return Username, Password, GCList, LogText, DoScreenshots, Date, Mode, ShowScreen
 
 
 

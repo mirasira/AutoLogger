@@ -1,8 +1,10 @@
 {
     "Username": "USERNAME",
     "Password": "PASSWORD",
-    "GCList": "BMDN6WQ",
+    "GCList": "BMDTZ24",
     "LogText": "Díky za keš!",
-    "DoScreenshots": false,
-    "Date": "2023-09-06"
+    "Date": "2024-09-06",
+    "ShowScreen": false,
+    "Mode": "LOG",
+    "DoScreenshots": false
 }

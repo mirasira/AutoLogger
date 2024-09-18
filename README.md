@@ -15,3 +15,6 @@
 | I am getting error XYZ | Try internet or ChatGPT |
 
 
+Available modes are "LOG" and "IGNORE"
+
+
