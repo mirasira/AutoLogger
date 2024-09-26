@@ -73,12 +73,12 @@ def PutToIgnoreList(page, GCCodes, LogText, DoScreenshots, Date, Language):
         # time.sleep(1000)
 
 def CheckLanguage(page):
-    Element = "#__next > div > div.page-container.flex.flex-col.flex-grow.items-center > div > section > div.list-details-1e8caxa > span > a"
-    element_text = page.inner_text(Element)
-    if element_text == "Back to My Lists":
+    try:
+        page.wait_for_selector("text='Back to My Lists'", timeout=500)
         return "EN"
-    else:
+    except:
         return "CZ"
+
     
 
 def LogCaches(page, GCCodes, LogText, DoScreenshots, Date, Language):
