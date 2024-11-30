@@ -163,7 +163,7 @@ def LogCaches(page, GCCodes, LogText, DoScreenshots, Date, Language):
 
         # submit log
 
-        button = page.locator('#__next > div > div.page-container.flex.flex-col.flex-grow.items-center > main > div > div.content-container > div > form > div.css-1febl34.eu7msjx0 > div.post-button-container > button')
+        button = page.locator('#__next > div > div.flex.flex-col.flex-grow.items-center.page-container > main > div > div.content-container > div > form > div.mt-5.mb-6.mx-0.flex.flex-col-reverse.gap-3.md\:flex-row.md\:justify-end > div.post-button-container.flex.items-center.justify-center.md\:flex-row > button')
         button.click()
         page.wait_for_load_state()
         if DoScreenshots:
@@ -212,8 +212,7 @@ def Login(page, Username, Password):
     text_field = page.locator('#Password')
     text_field.fill(Password)
     button = page.locator('#SignIn')
-    button.click()
-        
+    button.click()            
 
 def CheckForGDPR(page):
     Element = '//*[@id="CybotCookiebotDialogBodyLevelButtonLevelOptinAllowAll"]'
